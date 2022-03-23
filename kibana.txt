@@ -1,0 +1,67 @@
+PUT _enrich/policy/add-councillor-information
+{
+  "match": {
+    "indices": "parliament.politicians",
+    "match_field": "id",
+    "enrich_fields": ["party"]
+  }
+}
+
+PUT _enrich/policy/add-councillor-information/_execute
+
+
+PUT /_ingest/pipeline/enrich-councillors
+{
+  "description": "Enriches the councillor information when adding an affair",
+  "processors": [
+    {
+      "enrich": {
+        "policy_name": "add-councillor-information",
+        "field": "author.councillor.id",
+        "target_field": "test"
+      }
+    }
+  ]
+}
+
+POST /_ingest/pipeline/enrich-councillors/_simulate
+{
+  "docs": [
+{
+  "_index": "parliament.affairs",
+  "_type": "_doc",
+  "_id": "20110411.2022-02-06T06:19:19Z",
+  "_version": 1,
+  "_score": 1,
+  "_ignored": [
+    "texts.value.keyword"
+  ],
+  "_source": {
+    "id": 20110411,
+    "updated": "2021-04-15T07:27:25Z",
+    "additionalIndexing": "2841",
+    "affairType": {
+      "abbreviation": "Pa. Iv.",
+      "id": 4,
+      "name": "Parlamentarische Initiative"
+    },
+    "author": {
+      "councillor": {
+        "code": 2516,
+        "gender": "f",
+        "id": 494,
+        "name": "Meier-Schatz Lucrezia",
+        "officialDenomination": "Meier-Schatz"
+      },
+      "faction": {
+        "abbreviation": "Fraktion CEG",
+        "code": "CEg",
+        "id": 3,
+        "name": "Fraktion CVP/EVP/glp"
+      },
+      "type": "author"
+    }
+  }
+}
+  ]
+}
