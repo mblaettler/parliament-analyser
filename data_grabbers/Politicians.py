@@ -54,7 +54,7 @@ def fetch_and_upload(retries: int = 3, language: str = "de", entry_date: str = "
         else:
             print(f"Error: {politician['id']} could not be loaded")
 
-    es = Elasticsearch()
+    es = Elasticsearch(hosts="http://127.0.0.1:9200")
 
     elasticsearch.helpers.bulk(es, politicians, ignore_status=(409,))
 

@@ -1,7 +1,7 @@
-version: "3.9"
+version: "3.8"
 services:
   elasticsearch:
-    image: "elasticsearch:7.17.0"
+    image: "elasticsearch:8.4.3"
     networks:
       - elk_net
     ports:
@@ -9,10 +9,11 @@ services:
       - "9300:9300"
     environment:
       - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
     volumes:
       - elastic_data:/usr/share/elasticsearch/data
   kibana:
-    image: "kibana:7.17.0"
+    image: "kibana:8.4.3"
     networks:
       - elk_net
     ports:
