@@ -26,7 +26,7 @@ def fetch_and_upload(retries: int = 3, language: str = "de", legislative_period:
         print(".", end="")
         url = f"http://ws-old.parlament.ch/votes/affairs?legislativePeriodFilter={legislative_period}&lang={language}" \
               f"&pageNumber={page_counter}&format=json"
-        r = requests.get(url, headers={"Accept": "text/json"}, timeout=20)
+        r = requests.get(url, headers={"Accept": "text/json"}, timeout=30)
 
         if not r.ok:
             print(f"Error on page {page_counter}")
