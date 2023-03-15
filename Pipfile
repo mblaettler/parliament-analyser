@@ -12,6 +12,7 @@ pandas = "*"
 numpy = "*"
 matplotlib = "*"
 plotly = "*"
+streamlit = "*"
 
 [dev-packages]
 
